@@ -39,9 +39,7 @@ if file is None:
 else:
     image = Image.open(file)
     st.image(image, use_column_width=True)
-    predictions = upload_predict(image, model)
-    image_class = str(predictions[0][0][1])
-    score=np.round(predictions[0][0][2]) 
+    predictions = import_and_predict(image, model)
+    image_class = ['cat','dog','rat','house', 'fan', 'phone', 'horse', 'bear']
     st.write("The image is classified as",image_class)
-    st.write("The similarity score is approximately",score)
-    print("The image is classified as ",image_class, "with a similarity score of",score)
+    print("The image is classified as ",image_class)
