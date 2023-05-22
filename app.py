@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+
+
+get_ipython().run_cell_magic('writefile', 'app.py', 'import streamlit as st\nimport tensorflow as tf\nfrom tensorflow.keras.applications.imagenet_utils import decode_predictions\nimport cv2\nfrom PIL import Image, ImageOps\nimport numpy as np\n \n@st.cache_resource\ndef load_model():\n  model=tf.keras.models.load_model(\'image_classification.hdf5\')\n  return model\nwith st.spinner(\'Model is being loaded..\'):\n  model=load_model()\n \nst.write("""\n         # Image Classification\n         """\n         )\n \nfile = st.file_uploader("Upload the image to be classified", type=["jpg", "png"])\nst.set_option(\'deprecation.showfileUploaderEncoding\', False)\n \ndef upload_predict(upload_image, model):\n    \n        size = (180,180)    \n        image = ImageOps.fit(upload_image, size, Image.ANTIALIAS)\n        image = np.asarray(image)\n        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)\n        img_resize = cv2.resize(img, dsize=(224, 224),interpolation=cv2.INTER_CUBIC)\n        \n        img_reshape = img_resize[np.newaxis,...]\n    \n        prediction = model.predict(img_reshape)\n        pred_class=decode_predictions(prediction,top=1)\n        \n        return pred_class\nif file is None:\n    st.text("Please upload an image file")\nelse:\n    image = Image.open(file)\n    st.image(image, use_column_width=True)\n    predictions = upload_predict(image, model)\n    image_class = str(predictions[0][0][1])\n    score=np.round(predictions[0][0][2]) \n    st.write("The image is classified as",image_class)\n    st.write("The similarity score is approximately",score)\n    print("The image is classified as ",image_class, "with a similarity score of",score)')
+
