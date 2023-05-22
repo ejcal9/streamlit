@@ -39,7 +39,7 @@ if file is None:
 else:
     image = Image.open(file)
     st.image(image, use_column_width=True)
-    predictions = import_and_predict(image, model)
+    predictions = upload_predict(image, model)
     image_class = ['cat','dog','rat','house', 'fan', 'phone', 'horse', 'bear']
     st.write("The image is classified as",image_class)
     print("The image is classified as ",image_class)
