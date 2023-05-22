@@ -26,7 +26,7 @@ def upload_predict(upload_image, model):
         image = ImageOps.fit(upload_image, size, Image.ANTIALIAS)
         image = np.asarray(image)
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img_resize = cv2.resize(img, dsize=(7, 7),interpolation=cv2.INTER_CUBIC)
+        img_resize = cv2.resize(img, dsize=(7, 7),512)
         
         img_reshape = img_resize[np.newaxis,...]
     
