@@ -22,11 +22,11 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
  
 def upload_predict(upload_image, model):
     
-        size = (180,180)    
+        size = (64,64)    
         image = ImageOps.fit(upload_image, size, Image.ANTIALIAS)
         image = np.asarray(image)
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img_resize = cv2.resize(img, dsize=(224, 224),interpolation=cv2.INTER_CUBIC)
+        img_resize = cv2.resize(img, dsize=(7, 7),interpolation=cv2.INTER_CUBIC)
         
         img_reshape = img_resize[np.newaxis,...]
     
